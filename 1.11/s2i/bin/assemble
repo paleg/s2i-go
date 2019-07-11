@@ -3,11 +3,15 @@
 set -e
 set -x
 
-export GOPATH=/tmp/go
-mkdir -p $GOPATH/src/openshift
-mv /tmp/src $GOPATH/src/openshift/app
+if [[ -z "${APP_NAME}" ]]; then
+    APP_NAME=app
+fi
 
-pushd $GOPATH/src/openshift/app
+export GOPATH=/tmp/go
+mkdir -p $GOPATH/src
+mv /tmp/src $GOPATH/src/${APP_NAME}
+
+pushd $GOPATH/src/${APP_NAME}
 
 if [[ `go list -f {{.Incomplete}}` == "true" ]]; then
     go get -v ./...
@@ -15,4 +19,3 @@ fi
 
 go build -o /opt/app-root/gobinary
 popd
-
