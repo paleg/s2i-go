@@ -8,6 +8,8 @@ if [[ -z "${APP_NAME}" ]]; then
 fi
 
 export GOPATH=/tmp/go
+export GO111MODULE=on
+
 mkdir -p $GOPATH/src
 mv /tmp/src $GOPATH/src/${APP_NAME}
 
